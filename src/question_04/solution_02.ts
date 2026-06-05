@@ -1,17 +1,20 @@
-function twoSum(nums: number[], target: number): number[] {
-  const myMap = new Map<number, number>();
-
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i]!;
-
-    if (myMap.has(complement)) {
-      return [myMap.get(complement)!, i];
-    }
-
-    myMap.set(nums[i]!, i);
+function isAnagram(s: string, t: string): boolean {
+  if (s.length !== t.length) {
+    return false;
   }
 
-  return [];
-}
+  const charCounts: number[] = new Array(26).fill(0);
 
-console.log(twoSum([2, 7, 11, 15], 9));
+  for (let i = 0; i < s.length; i++) {
+    charCounts[s.charCodeAt(i) - 97]!++; // 'a' = 97
+    charCounts[t.charCodeAt(i) - 97]!--;
+  }
+
+  for (const count of charCounts) {
+    if (count !== 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
