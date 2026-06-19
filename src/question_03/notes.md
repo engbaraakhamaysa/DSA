@@ -1,80 +1,80 @@
-# Notes - 219. Contains Duplicate II
+# 219. Contains Duplicate II
 
-## Solution 1 - Hash Map (Index Tracking)
+## Problem
+
+Given an integer array `nums` and an integer `k`, return `true` if there are two distinct indices `i` and `j` such that:
+
+- `nums[i] == nums[j]`
+- `|i - j| <= k`
+
+### Example
+
+```text
+Input:  nums = [1,2,3,1], k = 3
+Output: true
+
+Explanation:
+The value 1 appears at indices 0 and 3.
+|0 - 3| = 3 <= k
+```
 
 ---
+
+# Possible Solutions
+
+| Solution                      | Time  | Space |
+| ----------------------------- | ----- | ----- |
+| Brute Force (Check All Pairs) | O(n²) | O(1)  |
+| Sliding Window + Hash Set     | O(n)  | O(k)  |
+| Hash Map (Index Tracking)     | O(n)  | O(n)  |
+
+---
+
+# Solution Used
 
 ## Data Structure
 
-### Array (`nums`)
+### Array
 
-| Operation | Complexity | Reason                                          |
-| --------- | ---------- | ----------------------------------------------- |
-| Access    | O(1)       | Direct access using index (`nums[i]`).          |
-| Search    | O(n)       | Need to scan elements in worst case.            |
-| Insert    | O(n)       | Inserting in middle requires shifting elements. |
-| Delete    | O(n)       | Removing elements requires shifting.            |
+Used to store the input numbers.
 
----
+Operations:
 
-### Hash Map (`map`)
+| Operation | Complexity |
+| --------- | ---------- |
+| Access    | O(1)       |
+| Search    | O(n)       |
+| Insert    | O(n)       |
+| Delete    | O(n)       |
+
+### Hash Map
 
 Stores:
 
-```text id="m1k2l3"
-value → last index
+```text
+value → latest index
 ```
 
-| Operation | Complexity | Reason                             |
-| --------- | ---------- | ---------------------------------- |
-| Insert    | O(1)       | Direct hashing of key-value pair   |
-| Lookup    | O(1)       | Direct key access without scanning |
-| Update    | O(1)       | Overwriting existing key           |
+Operations:
+
+| Operation | Complexity |
+| --------- | ---------- |
+| Insert    | O(1)       |
+| Lookup    | O(1)       |
+| Update    | O(1)       |
+
+### Why Hash Map?
+
+- We need to remember where each value was last seen.
+- Allows instant access to the previous index.
+- Avoids checking all pairs.
+- Efficiently calculates distance between duplicates.
 
 ---
 
-## Why Hash Map?
+# Pattern
 
-- We need to track the **last index** of each value
-- To efficiently check the distance between duplicates
-- Avoid nested loops (O(n²))
-
----
-
-## Algorithm
-
-### One Pass Hash Map
-
-Idea:
-
-For each number:
-
-1. Check if it was seen before
-2. If yes:
-   - Compare current index with previous index
-   - If difference ≤ k → return true
-
-3. Update map with current index
-
----
-
-### Steps
-
-1. Create empty Hash Map
-2. Loop through `nums`
-3. If number exists in map:
-   - Get previous index
-   - Check `i - prevIndex <= k`
-   - If true → return true
-
-4. Update map with current index
-5. If loop ends → return false
-
----
-
-## Pattern
-
-```text id="p2k9m1"
+```text
 Hash Map
 Index Tracking
 Sliding Window (Implicit)
@@ -82,33 +82,54 @@ Sliding Window (Implicit)
 
 ---
 
-## Complexity Analysis
+# Algorithm
 
-### Time Complexity
-
-```text id="t9x8aa"
-O(n)
-```
-
-#### Reason:
-
-- Single traversal of array
-- Each operation (get, set, has) is O(1)
-
----
-
-### Space Complexity
-
-```text id="s7v4bb"
-O(n)
-```
-
-#### Reason:
-
-- In worst case, store all elements in map
+1. Create an empty Hash Map.
+2. Traverse the array once.
+3. For each number:
+   - Check if it already exists in the map.
+   - If it exists:
+     - Get its previous index.
+     - Calculate the distance.
+     - If distance ≤ k, return `true`.
+4. Update the map with the current index.
+5. If the loop finishes, return `false`.
 
 ---
 
-## Key Idea
+# Complexity Analysis
 
-Instead of checking all pairs, we only store the **latest index** of each number and compare distances instantly.
+## Time Complexity
+
+```text
+O(n)
+```
+
+Reason:
+
+- One traversal of the array.
+- Hash Map lookup is O(1).
+- Hash Map update is O(1).
+
+---
+
+## Space Complexity
+
+```text
+O(n)
+```
+
+Reason:
+
+- In the worst case all values are unique.
+- The Hash Map stores up to `n` entries.
+
+---
+
+# Key Takeaway
+
+```text
+Brute Force             -> O(n²)
+Sliding Window + Set    -> O(n)
+Hash Map                -> O(n) ✓
+```
