@@ -16,7 +16,7 @@ public class Main {
                 int complement = target - nums[i];
 
                 if (map.containsKey(complement)) {
-                    return new int[]{map.get(complement), i};
+                    return new int[] { map.get(complement), i };
                 }
 
                 map.put(nums[i], i);
@@ -30,11 +30,17 @@ public class Main {
 
         Solution solution = new Solution();
 
-        int[] nums = {2, 7, 11, 15};
+        // problem
+        int[] nums = { 2, 7, 11, 15 };
+        // Gole
         int target = 9;
 
+        // sloution
         int[] result = solution.twoSum(nums, target);
-
+        System.out.println("===========================================");
+        System.out.println("===========================================");
         System.out.println(Arrays.toString(result));
+        System.out.println("===========================================");
+        System.out.println("===========================================");
     }
 }
